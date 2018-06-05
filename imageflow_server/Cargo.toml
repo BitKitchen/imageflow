@@ -52,7 +52,7 @@ regex = "0.2"
 log="0.3"
 env_logger="0.4"
 wait-timeout = "0.1"
-bincode = { git = "https://github.com/TyOverby/bincode", rev = "0bc25445" }
+bincode = { git = "https://github.com/TyOverby/bincode.git", rev = "0bc254459489761e2a933a3bba26cba32d515794" }
 staticfile = { git= "https://github.com/onur/staticfile", rev= "9f2ff7201eda648128c92e3f5597c587f0629f51" }
 conduit-mime-types = "0.7"
 url="1.4"
@@ -65,8 +65,9 @@ path = "src/main.rs"
 doc = false
 
 [dependencies.mount]
-git = "https://github.com/iron/mount.git"
-rev = "2c3d719be4c158d4ddbd8cdb402fafccdefec58c"
+version = "0.3.0"
+#git = "https://github.com/iron/mount.git"
+#rev = "2c3d719be4c158d4ddbd8cdb402fafccdefec58c"
 
 [dependencies.logger]
 git = "https://github.com/iron/logger.git"
