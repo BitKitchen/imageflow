@@ -16,7 +16,7 @@ fn main() {
     for path in env::split_paths(&env::var_os("DEP_PNG_INCLUDE").expect("include paths from libpng-sys")) {
         cc.include(path);
     }
-    for path in env::split_paths(&env::var_os("DEP_LCMS2_INCLUDE").expect("include paths from lcms2-sys")) {
+    for path in env::split_paths(&env::var_os("DEP_LCMS2_INCLUDE_ALT").expect("include paths from lcms2-sys")) {
         cc.include(path);
     }
 
