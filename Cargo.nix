@@ -1331,7 +1331,7 @@ let cratesIO = rec {
     sha256 = "1mbid78xlgrahrbn1cm9wz53ybxycr7nshr47bnbhww2brxy1d76";
     libPath = "rust/libimagequant.rs";
     libName = "imagequant_sys";
-    #type = "cdylib";
+    type = ["cdylib" "staticlib" "lib"];
     build = "rust/build.rs";
     dependencies = mapFeatures features ([ (crates."rgb"."${deps."imagequant_sys"."2.11.9"."rgb"}" deps) ]);
 
@@ -1980,7 +1980,7 @@ let cratesIO = rec {
     version = "0.1.2";
     authors = [ "Frommi <daniil.liferenko@gmail.com>" ];
     sha256 = "0j8jznyx6p8x1ankjmx3f7ndpgrwf4f31df84qckl1jj66vzz6fa";
-    #type = "rlib";
+    type = ["rlib" "cdylib"];
     build = "src/build.rs";
     dependencies = mapFeatures features ([ (crates."crc"."${deps."miniz_oxide_c_api"."0.1.2"."crc"}" deps) (crates."libc"."${deps."miniz_oxide_c_api"."0.1.2"."libc"}" deps) (crates."miniz_oxide"."${deps."miniz_oxide_c_api"."0.1.2"."miniz_oxide"}" deps) ]);
 
@@ -2132,7 +2132,7 @@ let cratesIO = rec {
     authors = [ "Kornel <pornel@pornel.net>" ];
     sha256 = "1qadl8bnx1zx9dzx2lbfdb3yc1ag0i8vzqnspdj9qqc975bqa1pp";
     libName = "mozjpeg_sys";
-    #type = "cdylib";
+    type = ["lib" "cdylib"];
     build = "src/build.rs";
     dependencies = mapFeatures features ([ (crates."libc"."${deps."mozjpeg_sys"."0.5.13"."libc"}" deps) ]);
 
@@ -4562,7 +4562,7 @@ crates = cratesIO // rec {
     src = ./.;
     workspace_member = "imageflow_abi";
     libName = "imageflow";
-    #type = "cdylib";
+    type = ["cdylib"];
     build = "build.rs";
     dependencies = mapFeatures features ([ (cratesIO.crates."backtrace"."${deps."imageflow_abi"."0.1.0"."backtrace"}" deps) (cratesIO.crates."base64"."${deps."imageflow_abi"."0.1.0"."base64"}" deps) (crates."imageflow_core"."${deps."imageflow_abi"."0.1.0"."imageflow_core"}" deps) (cratesIO.crates."libc"."${deps."imageflow_abi"."0.1.0"."libc"}" deps) (cratesIO.crates."smallvec"."${deps."imageflow_abi"."0.1.0"."smallvec"}" deps) ]);
 

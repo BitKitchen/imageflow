@@ -9,10 +9,8 @@
 let makeDeps = dependencies:
       (lib.concatMapStringsSep " " (dep:
         let extern = lib.strings.replaceStrings ["-"] ["_"] dep.libName; in
-        (if dep.crateType == "lib" then
-           " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}.rlib"
-         else
-           " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}${buildPlatform.extensions.sharedLibrary}")
+        (lib.optionalString (lib.elem "lib" dep.crateType) " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}.rlib")
+        + (lib.optionalString (lib.elem "cdylib" dep.crateType) " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}${buildPlatform.extensions.sharedLibrary}")
       ) dependencies);
 
     echo_build_heading = colors: ''
@@ -214,15 +212,17 @@ let makeDeps = dependencies:
          lib_src=$1
          echo_build_heading $lib_src ${libName}
 
-         noisily rustc --crate-name $CRATE_NAME $lib_src --crate-type ${crateType} \
-           ${rustcOpts} ${rustcMeta} ${crateFeatures} --out-dir target/lib \
-           --emit=dep-info,link -L dependency=target/deps ${deps} --cap-lints allow \
-           $BUILD_OUT_DIR $EXTRA_BUILD $EXTRA_FEATURES --color ${colors}
-
-         EXTRA_LIB=" --extern $CRATE_NAME=target/lib/lib$CRATE_NAME-${metadata}.rlib"
-         if [ -e target/deps/lib$CRATE_NAME-${metadata}${buildPlatform.extensions.sharedLibrary} ]; then
-            EXTRA_LIB="$EXTRA_LIB --extern $CRATE_NAME=target/lib/lib$CRATE_NAME-${metadata}${buildPlatform.extensions.sharedLibrary}"
-         fi
+         for crateType in ${lib.concatStringsSep " " crateType}; do
+           noisily rustc --crate-name $CRATE_NAME $lib_src --crate-type $crateType \
+             ${rustcOpts} ${rustcMeta} ${crateFeatures} --out-dir target/lib \
+             --emit=dep-info,link -L dependency=target/deps ${deps} --cap-lints allow \
+             $BUILD_OUT_DIR $EXTRA_BUILD $EXTRA_FEATURES --color ${colors}
+  
+           EXTRA_LIB=" --extern $CRATE_NAME=target/lib/lib$CRATE_NAME-${metadata}.rlib"
+           if [ -e target/deps/lib$CRATE_NAME-${metadata}${buildPlatform.extensions.sharedLibrary} ]; then
+              EXTRA_LIB="$EXTRA_LIB --extern $CRATE_NAME=target/lib/lib$CRATE_NAME-${metadata}${buildPlatform.extensions.sharedLibrary}"
+           fi
+         done
       }
 
       build_bin() {
@@ -419,9 +419,9 @@ stdenv.mkDerivation (rec {
     crateVersion = crate.version;
     crateAuthors = if crate ? authors && lib.isList crate.authors then crate.authors else [];
     crateType =
-      if lib.attrByPath ["procMacro"] false crate then "proc-macro" else
-      if lib.attrByPath ["plugin"] false crate then "dylib" else
-      (crate.type or "lib");
+      if lib.attrByPath ["procMacro"] false crate then ["proc-macro"] else
+      if lib.attrByPath ["plugin"] false crate then ["dylib"] else
+      (crate.type or ["lib"]);
     colors = lib.attrByPath [ "colors" ] "always" crate;
     extraLinkFlags = builtins.concatStringsSep " " (crate.extraLinkFlags or []);
     configurePhase = configureCrate {
