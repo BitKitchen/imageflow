@@ -65,8 +65,9 @@ path = "src/main.rs"
 doc = false
 
 [dependencies.mount]
-git = "https://github.com/iron/mount.git"
-rev = "2c3d719be4c158d4ddbd8cdb402fafccdefec58c"
+version = "0.3.0"
+#git = "https://github.com/iron/mount.git"
+#rev = "2c3d719be4c158d4ddbd8cdb402fafccdefec58c"
 
 [dependencies.logger]
 git = "https://github.com/iron/logger.git"
