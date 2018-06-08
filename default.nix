@@ -21,10 +21,26 @@ let
 in (pkgs.callPackage ./Cargo.nix {
   inherit buildRustCrate buildRustCrateHelpers;
 }).imageflow_server."0.1.0".override {
-  crateOverrides = pkgs.defaultCrateOverrides // {
+  crateOverrides = pkgs.defaultCrateOverrides // rec {
     libpng-sys = attrs: {
       buildInputs = [ pkgs.zlib ];
     };
+    macro_attr = attrs: {
+      src = pkgs.fetchgit {
+        url = "https://github.com/DanielKeep/rust-custom-derive.git";
+        rev = "1252f258cdb9b7c9867f937c52c2f5c0e69a9c03";
+        sha256 = "0hkigymvxdrd1zjkqyg1gscjwhi2fbyfgi0pzl1rn0pg4gpdij8d";
+      };
+    };
+    macro-attr = macro_attr;
+    enum_derive = attrs: {
+      src = pkgs.fetchgit {
+        url = "https://github.com/DanielKeep/rust-custom-derive.git";
+        rev = "1252f258cdb9b7c9867f937c52c2f5c0e69a9c03";
+        sha256 = "0hkigymvxdrd1zjkqyg1gscjwhi2fbyfgi0pzl1rn0pg4gpdij8d";
+      } + "/enum_derive";
+    };
+    enum-derive = enum_derive;
     imageflow_c_components = attrs: {
       buildInputs = [ pkgs.zlib pkgs.libjpeg.dev pkgs.libpng.dev pkgs.lcms2.dev mozjpegsrc ];
       preConfigure = ''
@@ -35,8 +51,9 @@ in (pkgs.callPackage ./Cargo.nix {
     };
     imageflow_types = attrs: {
       nativeBuildInputs = [ pkgs.git ];
-      preBuild = "export";
-      #preConfigure = "export GIT_COMMIT=hahahahahano";
+    };
+    imageflow_server = attrs: {
+      nativeBuildInputs = [ pkgs.zlib ];
     };
   };
 }
