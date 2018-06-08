@@ -9,8 +9,8 @@
 let makeDeps = dependencies:
       (lib.concatMapStringsSep " " (dep:
         let extern = lib.strings.replaceStrings ["-"] ["_"] dep.libName; in
-        (lib.optionalString (lib.elem "lib" dep.crateType) " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}.rlib")
-        + (lib.optionalString (lib.elem "cdylib" dep.crateType) " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}${buildPlatform.extensions.sharedLibrary}")
+        (lib.optionalString (builtins.length (lib.intersectLists dep.crateType ["lib" "rlib"]) > 0) " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}.rlib")
+        + (lib.optionalString (builtins.length (lib.intersectLists dep.crateType ["cdylib" "proc-macro"]) > 0) " --extern ${extern}=${dep.out}/lib/lib${extern}-${dep.metadata}${buildPlatform.extensions.sharedLibrary}")
       ) dependencies);
 
     echo_build_heading = colors: ''
@@ -129,6 +129,7 @@ let makeDeps = dependencies:
       fi
       if [[ ! -z "$BUILD" ]] ; then
          echo_build_heading "$BUILD" ${libName}
+         export | grep DEP_
          mkdir -p target/build/${crateName}
          EXTRA_BUILD_FLAGS=""
          if [ -e target/link_ ]; then
@@ -137,7 +138,8 @@ let makeDeps = dependencies:
          if [ -e target/link.build ]; then
            EXTRA_BUILD_FLAGS="$EXTRA_BUILD_FLAGS $(cat target/link.build)"
          fi
-         noisily rustc --crate-name build_script_build $BUILD --crate-type bin ${rustcOpts} \
+         export | grep DEP_
+         noisily rustc --verbose --crate-name build_script_build $BUILD --crate-type bin ${rustcOpts} \
            ${crateFeatures} --out-dir target/build/${crateName} --emit=dep-info,link \
            -L dependency=target/buildDeps ${buildDeps} --cap-lints allow $EXTRA_BUILD_FLAGS --color ${colors}
 
@@ -159,6 +161,10 @@ let makeDeps = dependencies:
          CRATENAME=$(echo ${crateName} | sed -e "s/\(.*\)-sys$/\U\1/")
          grep -P "^cargo:(?!(rustc-|warning=|rerun-if-changed=|rerun-if-env-changed))" target/build/${crateName}.opt \
            | sed -e "s/cargo:\([^=]*\)=\(.*\)/export DEP_$(echo $CRATENAME)_\U\1\E=\2/" > target/env
+         cat target/env
+         sed -i "s#`pwd`/target/build#$out/lib#g" target/env
+         sed -i "s#`pwd`/vendor#$out/lib/${crateName}.out/vendor#g" target/env
+         cat target/env
 
          set -e
          if [[ -n "$(ls target/build/${crateName}.out)" ]]; then
@@ -212,8 +218,10 @@ let makeDeps = dependencies:
          lib_src=$1
          echo_build_heading $lib_src ${libName}
 
+         echo ${deps}
+
          for crateType in ${lib.concatStringsSep " " crateType}; do
-           noisily rustc --crate-name $CRATE_NAME $lib_src --crate-type $crateType \
+           noisily rustc --verbose --crate-name $CRATE_NAME $lib_src --crate-type $crateType \
              ${rustcOpts} ${rustcMeta} ${crateFeatures} --out-dir target/lib \
              --emit=dep-info,link -L dependency=target/deps ${deps} --cap-lints allow \
              $BUILD_OUT_DIR $EXTRA_BUILD $EXTRA_FEATURES --color ${colors}
@@ -233,7 +241,7 @@ let makeDeps = dependencies:
           main_file=$2
         fi
         echo_build_heading $@
-        noisily rustc --crate-name $crate_name_ $main_file --crate-type bin ${rustcOpts}\
+        noisily rustc --verbose --crate-name $crate_name_ $main_file --crate-type bin ${rustcOpts}\
           ${crateFeatures} --out-dir target/bin --emit=dep-info,link -L dependency=target/deps \
           $LINK ${deps}$EXTRA_LIB --cap-lints allow \
           $BUILD_OUT_DIR $EXTRA_BUILD $EXTRA_FEATURES --color ${colors}

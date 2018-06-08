@@ -346,7 +346,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "enum_derive"
 version = "0.1.7"
-source = "git+https://github.com/DanielKeep/rust-custom-derive.git#1252f258cdb9b7c9867f937c52c2f5c0e69a9c03"
+source = "git+https://github.com/DanielKeep/rust-custom-derive.git?rev=1252f258cdb9b7c9867f937c52c2f5c0e69a9c03#1252f258cdb9b7c9867f937c52c2f5c0e69a9c03"
 
 [[package]]
 name = "env_logger"
@@ -635,12 +635,12 @@ name = "imageflow_riapi"
 version = "0.1.0"
 dependencies = [
  "difference 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "enum_derive 0.1.7 (git+https://github.com/DanielKeep/rust-custom-derive.git)",
+ "enum_derive 0.1.7 (git+https://github.com/DanielKeep/rust-custom-derive.git?rev=1252f258cdb9b7c9867f937c52c2f5c0e69a9c03)",
  "ieee754 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "imageflow_helpers 0.1.0",
  "imageflow_types 0.1.0",
  "lazy_static 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "macro-attr 0.2.1 (git+https://github.com/DanielKeep/rust-custom-derive.git)",
+ "macro-attr 0.2.1 (git+https://github.com/DanielKeep/rust-custom-derive.git?rev=1252f258cdb9b7c9867f937c52c2f5c0e69a9c03)",
  "option-filter 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.40 (registry+https://github.com/rust-lang/crates.io-index)",
  "url 1.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -917,7 +917,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "macro-attr"
 version = "0.2.1"
-source = "git+https://github.com/DanielKeep/rust-custom-derive.git#1252f258cdb9b7c9867f937c52c2f5c0e69a9c03"
+source = "git+https://github.com/DanielKeep/rust-custom-derive.git?rev=1252f258cdb9b7c9867f937c52c2f5c0e69a9c03#1252f258cdb9b7c9867f937c52c2f5c0e69a9c03"
 
 [[package]]
 name = "matches"
@@ -1919,7 +1919,7 @@ dependencies = [
 "checksum dtoa 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)" = "09c3753c3db574d215cba4ea76018483895d7bff25a31b49ba45db21c48e50ab"
 "checksum dunce 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "e86b07356baf1cc7058c95807ffba0bebe0c8cadd0df4c40b292c86194eabb37"
 "checksum either 1.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3be565ca5c557d7f59e7cfcf1844f9e3033650c929c6566f511e8005f205c1d0"
-"checksum enum_derive 0.1.7 (git+https://github.com/DanielKeep/rust-custom-derive.git)" = "<none>"
+"checksum enum_derive 0.1.7 (git+https://github.com/DanielKeep/rust-custom-derive.git?rev=1252f258cdb9b7c9867f937c52c2f5c0e69a9c03)" = "<none>"
 "checksum env_logger 0.4.3 (registry+https://github.com/rust-lang/crates.io-index)" = "3ddf21e73e016298f5cb37d6ef8e8da8e39f91f9ec8b0df44b7deb16a9f8cd5b"
 "checksum error 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)" = "a6e606f14042bb87cc02ef6a14db6c90ab92ed6f62d87e69377bc759fd7987cc"
 "checksum error-chain 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ff511d5dc435d703f4971bc399647c9bc38e20cb41452e3b9feb4765419ed3f3"
@@ -1967,7 +1967,7 @@ dependencies = [
 "checksum logger 0.3.0 (git+https://github.com/iron/logger.git?rev=0daead5fe10c3cd0c4738767c162dc63a59c3fb3)" = "<none>"
 "checksum lru-cache 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "4d06ff7ff06f729ce5f4e227876cb88d10bc59cd4ae1e09fbb2bde15c850dc21"
 "checksum lzw 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)" = "7d947cbb889ed21c2a84be6ffbaebf5b4e0f4340638cba0444907e38b56be084"
-"checksum macro-attr 0.2.1 (git+https://github.com/DanielKeep/rust-custom-derive.git)" = "<none>"
+"checksum macro-attr 0.2.1 (git+https://github.com/DanielKeep/rust-custom-derive.git?rev=1252f258cdb9b7c9867f937c52c2f5c0e69a9c03)" = "<none>"
 "checksum matches 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "100aabe6b8ff4e4a7e32c1c13523379802df0772b82466207ac25b013f193376"
 "checksum memchr 2.0.1 (registry+https://github.com/rust-lang/crates.io-index)" = "796fba70e76612589ed2ce7f45282f5af869e0fdd7cc6199fa1aa1f1d591ba9d"
 "checksum memoffset 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "0f9dc261e2b62d7a622bf416ea3c5245cdd5d9a7fcc428c0d06804dfce1775b3"

@@ -1980,7 +1980,7 @@ let cratesIO = rec {
     version = "0.1.2";
     authors = [ "Frommi <daniil.liferenko@gmail.com>" ];
     sha256 = "0j8jznyx6p8x1ankjmx3f7ndpgrwf4f31df84qckl1jj66vzz6fa";
-    type = ["rlib" "cdylib"];
+    type = ["lib" "cdylib"];
     build = "src/build.rs";
     dependencies = mapFeatures features ([ (crates."crc"."${deps."miniz_oxide_c_api"."0.1.2"."crc"}" deps) (crates."libc"."${deps."miniz_oxide_c_api"."0.1.2"."libc"}" deps) (crates."miniz_oxide"."${deps."miniz_oxide_c_api"."0.1.2"."miniz_oxide"}" deps) ]);
 

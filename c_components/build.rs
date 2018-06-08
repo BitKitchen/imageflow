@@ -10,6 +10,9 @@ fn main() {
     cc.include(root.join("lib"));
     cc.include(root);
 
+    for path in env::split_paths(&env::var_os("DEP_MOZJPEG_INCLUDE").expect("include paths from mozjpeg-sys")) {
+        cc.include(path);
+    }
     for path in env::split_paths(&env::var_os("DEP_JPEG_INCLUDE").expect("include paths from mozjpeg-sys")) {
         cc.include(path);
     }
@@ -17,6 +20,9 @@ fn main() {
         cc.include(path);
     }
     for path in env::split_paths(&env::var_os("DEP_LCMS2_INCLUDE").expect("include paths from lcms2-sys")) {
+        cc.include(path);
+    }
+    for path in env::split_paths(&env::var_os("DEP_LCMS2_INCLUDE_ALT").expect("include paths from lcms2-sys")) {
         cc.include(path);
     }
 

@@ -10,8 +10,8 @@ imageflow_helpers = { path = "../imageflow_helpers", version = "*" }
 url = "*"
 ieee754 ="0.2"
 time="*"
-macro-attr= { git="https://github.com/DanielKeep/rust-custom-derive.git"}
-enum_derive= { git="https://github.com/DanielKeep/rust-custom-derive.git" }
+macro-attr= { git="https://github.com/DanielKeep/rust-custom-derive.git", rev = "1252f258cdb9b7c9867f937c52c2f5c0e69a9c03"}
+enum_derive= { git="https://github.com/DanielKeep/rust-custom-derive.git", rev = "1252f258cdb9b7c9867f937c52c2f5c0e69a9c03" }
 option-filter = "1"
 lazy_static = "1"
 
